@@ -1,0 +1,67 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Feedback</title>
+
+</head>
+
+<body>
+<div class="container">
+
+    <h2>All Feedback</h2>
+
+    <div class="top-bar">
+        <span>Feedback Management System</span>
+
+        <a class="add-btn" th:href="@{/feedback/new}">
+            + Add Feedback
+        </a>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Feedback Message</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="f : ${feedbackList}">
+                <td th:text="${f.id}">1</td>
+                <td th:text="${f.name}">Shahid</td>
+                <td th:text="${f.message}">Good service</td>
+
+                <td>
+                    <a class="edit-btn"
+                       th:href="@{/feedback/edit/{id}(id=${f.id})}">
+                        Edit
+                    </a>
+
+                    <a class="delete-btn"
+                       th:href="@{/feedback/delete/{id}(id=${f.id})}"
+                       onclick="return confirm('Are you sure you want to delete this feedback?')">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(feedbackList)}">
+                <td colspan="4" class="empty">
+                    No feedback available. Add your first feedback!
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
+```

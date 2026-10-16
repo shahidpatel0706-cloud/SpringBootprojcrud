@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+
+   
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>My Dashboard</h2>
+        <a class="logout" th:href="@{/login}">Logout</a>
+    </nav>
+
+    <div class="container">
+
+        <section class="welcome">
+            <h1>
+                Welcome,
+                <span th:text="${user != null ? user.username : 'User'}">User</span>!
+            </h1>
+            <p>Welcome to your dashboard. You have successfully logged in.</p>
+        </section>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>My Profile</h3>
+                <p>
+                    <strong>Username:</strong>
+                    <span th:text="${user != null ? user.username : 'Not available'}">User</span>
+                </p>
+                <p>
+                    <strong>Email:</strong>
+                    <span th:text="${user != null ? user.email : 'Not available'}">Email</span>
+                </p>
+            </div>
+
+            <

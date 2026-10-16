@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>Admin Panel</h2>
+        <a class="logout" th:href="@{/login}">Logout</a>
+    </nav>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>Welcome, Admin!</h1>
+            <p>Manage registered users and monitor your application.</p>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <h3>Total Registered Users</h3>
+                <p th:text="${users.size()}">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Admin Accounts</h3>
+                <p th:text="${#lists.size(users.?[role != null and #strings.toUpperCase(role) == 'ADMIN'])}">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Regular Users</h3>
+                <p th:text="${#lists.size(users.?[role == null or #strings.toUpperCase(role) != 'ADMIN'])}">0</p>
+            </div>
+        </section>
+
+        <section class="table-box">
+            <h2>Registered Users</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="u : ${users}">
+                        <td th:text="${u.id}">1</td>
+                        <td th:text="${u.username}">Username</td>
+                        <td th:text="${u.email}">Email</td>
+                        <td>
+                            <span class="role"
+                                  th:text="${u.role != null ? u.role : 'USER'}">USER</span>
+                        </td>
+                        <td>
+                            <form th:action="@{/admin/users/delete/{id}(id=${u.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <button class="delete-btn" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(users)}">
+                        <td colspan="5" class="empty">
+                            No users registered yet.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+<a th:href="@{/feedback/list}">
+    Manage Feedback
+</a>
+    <footer>
+        &copy; 2026 My Application | Admin Dashboard
+    </footer>
+
+</body>
+</html>

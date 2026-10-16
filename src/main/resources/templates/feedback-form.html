@@ -1,0 +1,49 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
+    
+</head>
+
+<body>
+<div class="container">
+
+    <h2 th:text="${editing} ? 'Edit Feedback' : 'Share Your Feedback'">
+        Share Your Feedback
+    </h2>
+
+    <form th:action="@{/feedback/save}"
+          th:object="${feedback}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <label for="name">Your Name</label>
+        <input type="text" id="name"
+               th:field="*{name}"
+               placeholder="Enter your name"
+               required>
+
+        <label for="message">Your Feedback</label>
+        <textarea id="message"
+                  th:field="*{message}"
+                  placeholder="Write your feedback..."
+                  required></textarea>
+
+        <button type="submit"
+                th:text="${editing} ? 'Update Feedback' : 'Submit Feedback'">
+            Submit Feedback
+        </button>
+    </form>
+
+    <a class="link" th:href="@{/feedback/list}">
+        View All Feedback
+    </a>
+
+</div>
+</body>
+</html>
